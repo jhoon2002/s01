@@ -1,0 +1,40 @@
+<Routing>
+ROOT: src/routes   *project config 에서 변경 가능
+라우트 파일: '+' prefix
++page.svelte: 앱의 페이지를 정의하는 컴포넌트, SSR, CSR 모두에서 렌더링 가능
++page.js(ts): 렌더링되기 전에 일부 데이터를 로드하기 위해 load 함수를 내보냄
+   +page.svelte 와 함께 실행 => 그 의미는, page.svelte 가 SSR 중엔 서버에서 CSR 중엔 브라우저에서 실행
+   내보내는 것들 > load, prerender, ssr, csr
++page.server.js: 로드 기능이 서버에서만 실행될 수 있는 경우
+   (예: 데이터베이스에서 데이터를 가져와야 하거나 API 키와 같은 개인 환경 변수에 액세스해야 하는 경우)
+   내보내는 것들
+     1. load: 서버에서 데이터를 읽음
+     2. actions: <form> 요소로 서버에 데이터 저장
+     3. page options: prerender, ssr, csr
++error: 로드 중에 오류가 발생하면 경로별 기본 오류 페이지(+error.svelte)를 렌더링
+  해당 경로에 에러 파일이 없을 경우 경로를 따라 올라감 src/routes/+error.svelte 까지
+  이것도 없을 시, src/error.html
+  No route 시, 404 에러
+  +error.svelte는 handle 또는 +server.js 의 request hander 내에서 오류가 발생할 때는 미사용
++layout.svelte: default layout
+  nested layout 가능 /src/routes/+layout.svelte, /src/routes/setting/+layout.svelte
++layout.js: 내보내는 것들(load, prerender, ssr, csr)
+  load: 가져온 값은 하위 페이지에서 이용 가능(export let data), 하위 페이지 탐색시 데이터 변경 X
+  prerender, ssr, csr: 하위 페이지의 디폴드가 됨
++layout.server.js: 서버에서 실행, 내보내는 것들 prerender, ssr, csr 동일
++server(= api route = endpoint): 페이지뿐만 아니라 응답을 완전히 제어하는 방식으로 경로 정의할 수 있음
+  ex) /api/random-number 즉, 이것도 route(경로) 범주에서 이해하는 것이 옳다.
++server.js(ts): 내보내는 것들(GET, POST, PATCH, PUT, DELETE)
+    => 인자(RequestEvent), 반환(Response)
+    (참고)@sveltejs/kit 의 error, redirect, json methods 이용 가능
+   +server.js 와 +page 가 같은 위치인 경우 처리 규칙
+     PUT/PATCH/DELETE: 항상 +server.js 로 핸들링
+     GET/POST: 헤더가 text/html 이면 +page 로 핸들링, 아니면 +server.js 로 핸들링
+$types: svelteKit 이 hidden 디렉토리에 생성하는 type 파일
+  PageLoad, PageServerLoad, LayoutLoad or LayoutServerLoad
+그외 다른 파일: 경로 디렉터리 내의 다른 모든 파일은 SvelteKit에서 무시됨.
+   이는 구성 요소와 유틸리티 모듈을 필요한 경로와 함께 배치할 수 있음을 의미.
+   여러 경로에서 구성 요소와 모듈이 필요한 경우 $lib에 두는 것이 좋음.
+
+<Loading data>
+Page data
