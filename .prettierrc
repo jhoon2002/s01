@@ -10,6 +10,6 @@
 	"tabWidth": 4,
 	"bracketSpacing": true,
 	"endOfLine": "auto",
-	"singleAttributePerLine": true,
+	"singleAttributePerLine": false,
 	"svelteIndentScriptAndStyle": false
 }

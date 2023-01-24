@@ -3,16 +3,20 @@ import 'uno.css'
 import '@unocss/reset/tailwind.css'
 import '~routes/styles.css'
 import SideMenu from '~lib/side-menu/SideMenu.svelte'
+
+/** @type {import('./$types').LayoutData} */
+export let data
+
 let isOpen = true
 let items = [
     {
-        text: '시험대상자',
+        text: '시험 대상자',
         icon: 'fluent:accessibility-16-regular',
         children: [
             {
-                text: '1대상자 입력',
+                text: '대상자 입력',
                 icon: 'fluent:alert-16-regular',
-                path: '/',
+                path: '/examinees/new',
             },
             {
                 text: '2대상자 목록',
@@ -29,7 +33,11 @@ let items = [
                 icon: 'fluent:animal-cat-16-regular',
                 children: [
                     { text: '서브메뉴1', icon: 'fluent:attach-16-filled', path: '/sample/s3' },
-                    { text: '서브메뉴1', icon: 'fluent:balloon-16-regular', path: '/sample/s4' },
+                    {
+                        text: '서브메뉴1',
+                        icon: 'fluent:balloon-16-regular',
+                        path: '/sample/s4',
+                    },
                     { text: '서브메뉴2', icon: 'fluent:beaker-16-regular', path: '/sample/s5' },
                 ],
             },
@@ -63,7 +71,11 @@ let items = [
                         icon: 'fluent:calendar-ltr-16-regular',
                         path: '/sample/s9',
                     },
-                    { text: '서브메뉴2', icon: 'fluent:camera-16-regular', path: '/sample/s10' },
+                    {
+                        text: '서브메뉴2',
+                        icon: 'fluent:camera-16-regular',
+                        path: '/sample/s10',
+                    },
                 ],
             },
             {
@@ -76,7 +88,11 @@ let items = [
                         icon: 'fluent:classification-16-regular',
                         path: '/sample/s12',
                     },
-                    { text: '서브메뉴2', icon: 'fluent:code-text-16-regular', path: '/sample/s13' },
+                    {
+                        text: '서브메뉴2',
+                        icon: 'fluent:code-text-16-regular',
+                        path: '/sample/s13',
+                    },
                     { text: '서브메뉴2', icon: 'fluent:color-16-regular', path: '/sample/s14' },
                 ],
             },
@@ -95,7 +111,7 @@ let items = [
         class="flex-none h-60px flex gap-2 items-center
                 border-b border-b-solid border-gray-200 px-5"
     >
-        <div class="text-1.2rem">한국예술종합학교</div>
+        <div class="text-1.2rem">연극원 입시 관리 시스템</div>
         <button
             class="border-none p-1
                     rounded-md cursor-pointer
@@ -115,7 +131,7 @@ let items = [
         >
             <div class="pr-2"><SideMenu {items} /></div>
         </aside>
-        <content class="flex-auto flex flex-col">
+        <content class="flex-auto flex flex-col overflow-y-auto">
             <article class="flex-auto">
                 <div class="p-5">
                     <slot />
